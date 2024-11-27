@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les produits !{% endblock %}
+
+{% block body %}
+
+    <div class="containers d-flex align-items-center justify-content-center flex-column gap-3 container">
+        <div class="d-flex align-items-center justify-content-between container-fluid">
+            <h2>Les produits</h2>
+            <a href="" class="btn btn-secondary">Ajouter</a>
+        </div>
+        <form class="d-flex align-items-center align-self-start flex-row gap-2 container-sm">
+            <input style="width:20%;" type="text" name="search" id="" placeholder="Rechercher..." class="form-control">
+            <input style="width:20%;" type="number" name="" id="" placeholder="Pagination..." class="form-control">
+            <button type="submit" class="btn btn-sm btn-primary">Recherhcer</button>
+        </form>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nom</th>
+                    <th>Prix</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td>{{product.id}}</td>
+                        <td>{{product.name}}</td>
+                        <td>{{product.price | number_format(2, ',', ' ')}} Ar</td>
+                        <td>
+                            <div class="d-flex gap-1">
+                                <a href="" class="btn btn-sm btn-success">Editer</a>
+                                <a href="" class="btn btn-sm btn-danger">Supprimer</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

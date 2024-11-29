@@ -84,4 +84,14 @@ class ProductController extends AbstractController
         ]);
     }
 
+    #[Route('/delete/{id}', name: 'delete', methods:['DELETE'])]
+    public function delete(Product $product)
+    {
+        $id = $product->getId();
+        $this->entity->remove($product);
+        $this->entity->flush();
+        $this->addFlash('danger', "Produit N°$id supprimé");
+        return $this->redirectToRoute('admin.products.index');
+    }
+
 }

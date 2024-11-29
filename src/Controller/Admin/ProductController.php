@@ -9,9 +9,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/admin/products', name: 'admin.products.')]
+#[IsGranted('ROLE_ADMIN')]
 class ProductController extends AbstractController
 {
 
@@ -26,7 +28,7 @@ class ProductController extends AbstractController
         $page = $request->query->get('page', 1);
         $search = $request->query->get('search', '');
         $products = $this->entity->getRepository(Product::class)->getAll($page, $search);
-        return $this->render('admin/product/index.html.twig', [
+            return $this->render('admin/product/index.html.twig', [
             'products' => $products,
             'search' => $search,
         ]);

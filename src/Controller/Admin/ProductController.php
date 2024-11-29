@@ -71,7 +71,6 @@ class ProductController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $product->setSlug($slugger->slug($form->get('name')->getData(), '-'))
-                    ->setCreatedAt(new \DateTimeImmutable())
                     ->setUpdatedAt(new \DateTimeImmutable());
             $this->entity->flush();
             $this->addFlash('success', 'Produit N°'.$product->getId(). ' mis à jour');

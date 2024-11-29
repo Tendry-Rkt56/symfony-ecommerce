@@ -44,7 +44,7 @@
                             <td>
                                 <div class="d-flex gap-1">
                                     <a href="" class="btn btn-sm btn-success">Voir le profil</a>
-                                    <form action="" method="POST">
+                                    <form action="{{path('admin.user.delete', {id: user.id})}}" method="POST">
                                         <input type="hidden" name="_method" value="DELETE" id="">
                                         <input type="submit" class="btn btn-sm btn-danger" value="Supprimer">
                                     </form>

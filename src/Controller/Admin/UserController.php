@@ -29,4 +29,14 @@ class UserController extends AbstractController
             'search' => $search,
         ]);
     }
+
+    #[Route('/delete/{id}', name: 'delete', methods: ['DELETE'])]
+    public function delete(User $user)
+    {
+        $id = $user->getId();
+        $this->entity->remove($user);
+        $this->entity->flush();
+        $this->addFlash('danger', "Client N° $id supprimé");
+        return $this->redirectToRoute('admin.user.index');
+    }
 }

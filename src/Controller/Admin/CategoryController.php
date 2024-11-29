@@ -56,4 +56,39 @@ class CategoryController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/{id}-edit', name: 'edit', methods:['GET', 'POST'])]
+    public function edit(Category $category, Request $request)
+    {
+        $form = $this->createForm(CategoryType::class, $category, [
+            'attr' => [
+                'class' => 'forms',
+            ]
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $category->setUpdatedAt(new \DateTimeImmutable());
+            $this->entity->flush();
+            $this->addFlash('success', 'Catégorie N°'.$category->getId(). ' mis à jour');
+            return $this->redirectToRoute('admin.category.index');
+        }
+
+        return $this->render('admin/category/edit.html.twig', [
+            'category' => $category,
+            'form' => $form,
+        ]);
+
+    }
+
+    #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
+    public function delete(Category $category)
+    {
+        $id = $category->getId();
+        $this->entity->remove($category);
+        $this->entity->flush();
+        $this->addFlash('danger', 'Categorie N° '.$id.' mis à jour');
+        return $this->redirectToRoute('admin.category.index');
+    }
 }

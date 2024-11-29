@@ -35,8 +35,8 @@
                             <td>{{category.name}}</td>
                             <td>
                                 <div class="d-flex gap-1">
-                                    <a href="" class="btn btn-sm btn-success">Editer</a>
-                                    <form action="" method="POST">
+                                    <a href="{{path('admin.category.edit', {id: category.id})}}" class="btn btn-sm btn-success">Editer</a>
+                                    <form action="{{path('admin.category.delete', {id: category.id})}}" method="POST">
                                         <input type="hidden" name="_method" value="DELETE" id="">
                                         <input type="submit" class="btn btn-sm btn-danger" value="Supprimer">
                                     </form>

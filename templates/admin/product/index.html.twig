@@ -25,6 +25,7 @@
                     <th>#</th>
                     <th>Nom</th>
                     <th>Prix</th>
+                    <th>Catégorie</th>
                     <th></th>
                 </tr>
             </thead>
@@ -35,6 +36,7 @@
                             <td>{{product.id}}</td>
                             <td>{{product.name}}</td>
                             <td class="fw-bolder">{{product.price | number_format(2, ',', ' ')}} Ar</td>
+                            <td>{{product.category.name | default(' ')}}</td>
                             <td>
                                 <div class="d-flex gap-1">
                                     <a href="{{path('admin.products.edit', {id: product.id})}}" class="btn btn-sm btn-success">Editer</a>

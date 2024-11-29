@@ -20,7 +20,7 @@ class ProductRepository extends ServiceEntityRepository
     public function getAll(int $page, string $search = '')
     {
         return $this->paginator->paginate(
-            $this->createQueryBuilder('p')->where('p.name LIKE :search')->setParameter('search', '%'.$search.'%'),
+            $this->createQueryBuilder('p')->leftJoin('p.category', 'c')->select('p', 'c')->where('p.name LIKE :search')->setParameter('search', '%'.$search.'%'),
             $page,
             20, 
             []

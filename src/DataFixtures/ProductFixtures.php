@@ -22,6 +22,7 @@ class ProductFixtures extends Fixture
     {
         $faker = Factory::create('fr_FR');
         $faker->addProvider(new Restaurant($faker));
+        $categories = ['Déjeuner', 'Dîner', 'Petit déjeuner', 'Matériel informatique'];
 
         for ($i = 1; $i <= 100; $i++) {
             $foodName = $faker->foodName();
@@ -29,6 +30,7 @@ class ProductFixtures extends Fixture
                         ->setName($foodName)
                         ->setPrice($faker->numberBetween(1000, 1000000))
                         ->setSlug($this->slugger->slug($foodName, '-'))
+                        ->setCategory($this->getReference($categories[$faker->numberBetween(0, 3)]))
                         ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTime()))
                         ->setUpdatedAt(\DateTimeImmutable::createFromMutable($faker->dateTime()));
             $manager->persist($product);

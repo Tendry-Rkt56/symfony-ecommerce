@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Product;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -35,6 +37,18 @@ class ProductType extends AbstractType
                 ],
                 'label_attr' => [
                     'class' => 'fw-bolder',
+                ]
+            ])
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => 'name',
+                'placeholder' => 'Séléctionner une catégorie',
+                'label' => 'Categorie associée',
+                'label_attr' => [
+                    'class' => 'fw-bolder',
+                ],
+                'attr' => [
+                    'class' => 'form-select'
                 ]
             ])
             ->add("save", SubmitType::class, [

@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les produits !{% endblock %}
+
+{% block body %}
+
+    <div class="containers d-flex align-items-center justify-content-center flex-column gap-3 container">
+        <div class="d-flex align-items-center justify-content-between container-fluid">
+            <h2>Les produits</h2>
+            <a href="{{path('admin.products.create')}}" class="btn btn-secondary">Ajouter</a>
+        </div>
+        <form class="d-flex align-items-center align-self-start flex-row gap-2 container-sm">
+            <input style="width:20%;" type="text" value="{{search}}" name="search" id="" placeholder="Rechercher..." class="form-control">
+            <input style="width:20%;" type="number" name="" id="" placeholder="Pagination..." class="form-control">
+            <button type="submit" class="btn btn-sm btn-primary">Recherhcer</button>
+        </form>
+        <div class="container">
+            {% for type, message in app.flashes %}
+                <div class="d-flex align-items-center justify-content-center container alert alert-{{type}}">{{message | join('')}}</div>
+            {% endfor %}
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nom</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if categories is not empty %}
+                    {% for category in categories %}
+                        <tr>
+                            <td>{{category.id}}</td>
+                            <td>{{category.name}}</td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    <a href="" class="btn btn-sm btn-success">Editer</a>
+                                    <form action="" method="POST">
+                                        <input type="hidden" name="_method" value="DELETE" id="">
+                                        <input type="submit" class="btn btn-sm btn-danger" value="Supprimer">
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">Pas de categories correspondant</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        {{knp_pagination_render(categories)}}
+    </div>
+
+{% endblock %}

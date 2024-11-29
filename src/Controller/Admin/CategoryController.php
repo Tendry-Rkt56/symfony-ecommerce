@@ -3,13 +3,14 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Category;
+use App\Form\CategoryType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/admin/category', name: 'admin.category')]
+#[Route('/admin/category', name: 'admin.category.')]
 class CategoryController extends AbstractController
 {
 
@@ -27,6 +28,32 @@ class CategoryController extends AbstractController
         return $this->render('admin/category/index.html.twig', [
             'categories' => $categories,
             'search' => $search,
+        ]);
+    }
+
+    #[Route('/new', name: 'create', methods:['GET', 'POST'])]
+    public function create(Request $request)
+    {
+        $category = new Category();
+        $form = $this->createForm(CategoryType::class, $category, [
+            'attr' => [
+                'class' => 'forms'
+            ]
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $category->setCreatedAt(new \DateTimeImmutable())
+                    ->setUpdatedAt(new \DateTimeImmutable());
+            $this->entity->persist($category);
+            $this->entity->flush();
+            $this->addFlash('success', 'Nouvelle catégorie créée');
+            return $this->redirectToRoute('admin.category.index');
+        }
+
+        return $this->render('admin/category/create.html.twig', [
+            'form' => $form,
         ]);
     }
 }

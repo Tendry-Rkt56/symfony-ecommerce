@@ -29,22 +29,28 @@
                 </tr>
             </thead>
             <tbody>
-                {% for product in products %}
+                {% if products is not empty %}
+                    {% for product in products %}
+                        <tr>
+                            <td>{{product.id}}</td>
+                            <td>{{product.name}}</td>
+                            <td class="fw-bolder">{{product.price | number_format(2, ',', ' ')}} Ar</td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    <a href="{{path('admin.products.edit', {id: product.id})}}" class="btn btn-sm btn-success">Editer</a>
+                                    <form action="{{path('admin.products.delete', {id: product.id})}}" method="POST">
+                                        <input type="hidden" name="_method" value="DELETE" id="">
+                                        <input type="submit" class="btn btn-sm btn-danger" value="Supprimer">
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
                     <tr>
-                        <td>{{product.id}}</td>
-                        <td>{{product.name}}</td>
-                        <td class="fw-bolder">{{product.price | number_format(2, ',', ' ')}} Ar</td>
-                        <td>
-                            <div class="d-flex gap-1">
-                                <a href="{{path('admin.products.edit', {id: product.id})}}" class="btn btn-sm btn-success">Editer</a>
-                                <form action="{{path('admin.products.delete', {id: product.id})}}" method="POST">
-                                    <input type="hidden" name="_method" value="DELETE" id="">
-                                    <input type="submit" class="btn btn-sm btn-danger" value="Supprimer">
-                                </form>
-                            </div>
-                        </td>
+                        <td colspan="4" class="text-center">Pas de produit correspondant</td>
                     </tr>
-                {% endfor %}
+                {% endif %}
             </tbody>
         </table>
         {{knp_pagination_render(products)}}

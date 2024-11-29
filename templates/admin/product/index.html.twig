@@ -36,7 +36,7 @@
                         <td>{{product.price | number_format(2, ',', ' ')}} Ar</td>
                         <td>
                             <div class="d-flex gap-1">
-                                <a href="" class="btn btn-sm btn-success">Editer</a>
+                                <a href="{{path('admin.products.edit', {id: product.id})}}" class="btn btn-sm btn-success">Editer</a>
                                 <a href="" class="btn btn-sm btn-danger">Supprimer</a>
                             </div>
                         </td>

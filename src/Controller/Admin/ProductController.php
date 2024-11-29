@@ -57,4 +57,31 @@ class ProductController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/{id}-edit', name: 'edit', methods: ['GET', 'POST'])]
+    public function edit(Product $product, Request $request, SluggerInterface $slugger)
+    {
+        $form = $this->createForm(ProductType::class, $product, [
+            'attr' => [
+                'class' => 'forms'
+            ]
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $product->setSlug($slugger->slug($form->get('name')->getData(), '-'))
+                    ->setCreatedAt(new \DateTimeImmutable())
+                    ->setUpdatedAt(new \DateTimeImmutable());
+            $this->entity->flush();
+            $this->addFlash('success', 'Produit N°'.$product->getId(). ' mis à jour');
+            return $this->redirectToRoute('admin.products.index');
+        }
+
+        return $this->render('admin/product/edit.html.twig', [
+            'product' => $product,
+            'form' => $form,
+        ]);
+    }
+
 }

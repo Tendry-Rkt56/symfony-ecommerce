@@ -5,15 +5,26 @@ namespace App\Repository;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Product>
  */
 class ProductRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginator)
     {
         parent::__construct($registry, Product::class);
+    }
+
+    public function getAll(int $page, string $search = '')
+    {
+        return $this->paginator->paginate(
+            $this->createQueryBuilder('p')->where('p.name LIKE :search')->setParameter('search', '%'.$search.'%'),
+            $page,
+            20, 
+            []
+        );
     }
 
     //    /**

@@ -10,7 +10,7 @@
             <a href="" class="btn btn-secondary">Ajouter</a>
         </div>
         <form class="d-flex align-items-center align-self-start flex-row gap-2 container-sm">
-            <input style="width:20%;" type="text" name="search" id="" placeholder="Rechercher..." class="form-control">
+            <input style="width:20%;" type="text" value="{{search}}" name="search" id="" placeholder="Rechercher..." class="form-control">
             <input style="width:20%;" type="number" name="" id="" placeholder="Pagination..." class="form-control">
             <button type="submit" class="btn btn-sm btn-primary">Recherhcer</button>
         </form>
@@ -39,6 +39,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        {{knp_pagination_render(products)}}
     </div>
 
 {% endblock %}

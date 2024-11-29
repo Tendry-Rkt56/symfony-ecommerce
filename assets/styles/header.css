@@ -78,6 +78,16 @@ header {
     left:5%;
 }
 
+.forms {
+    box-shadow:0 0 3px rgba(0,0,0,0.1);
+    width:500px;
+    padding:20px 30px;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}
+
  @media (max-width: 768px) {
      .navbar-menu {
          display: none;

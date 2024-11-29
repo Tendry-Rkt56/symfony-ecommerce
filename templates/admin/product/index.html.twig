@@ -14,6 +14,11 @@
             <input style="width:20%;" type="number" name="" id="" placeholder="Pagination..." class="form-control">
             <button type="submit" class="btn btn-sm btn-primary">Recherhcer</button>
         </form>
+        <div class="container">
+            {% for type, message in app.flashes %}
+                <div class="d-flex align-items-center justify-content-center container alert alert-{{type}}">{{message | join('')}}</div>
+            {% endfor %}
+        </div>
         <table class="table table-striped">
             <thead>
                 <tr>

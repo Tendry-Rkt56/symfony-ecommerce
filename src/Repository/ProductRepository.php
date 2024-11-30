@@ -17,14 +17,22 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    public function getAll(int $page, string $search = '')
+    public function getAll(int $page, string $search = '', ?int $categoryId = null)
     {
         return $this->paginator->paginate(
-            $this->createQueryBuilder('p')->leftJoin('p.category', 'c')->select('p', 'c')->where('p.name LIKE :search')->setParameter('search', '%'.$search.'%'),
+            $this->query($categoryId, $search),
             $page,
             20, 
             []
         );
+    }
+
+    public function query(?int $categoryId = null, string $search)
+    {
+        if ($categoryId == null || $categoryId != -1) {
+            return $this->createQueryBuilder('p')->leftJoin('p.category', 'c')->select('p', 'c')->where('p.name LIKE :search')->andWhere('c.id = :id')->setParameter('search', '%'.$search.'%')->setParameter('id', $categoryId);
+        }
+        return $this->createQueryBuilder('p')->leftJoin('p.category', 'c')->select('p', 'c')->where('p.name LIKE :search')->setParameter('search', '%'.$search.'%');
     }
 
     //    /**

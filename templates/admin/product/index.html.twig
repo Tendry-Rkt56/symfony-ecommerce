@@ -11,7 +11,16 @@
         </div>
         <form class="d-flex align-items-center align-self-start flex-row gap-2 container-sm">
             <input style="width:20%;" type="text" value="{{search}}" name="search" id="" placeholder="Rechercher..." class="form-control">
-            <input style="width:20%;" type="number" name="" id="" placeholder="Pagination..." class="form-control">
+            <select style="width:20%" name="category" id="" class="form-select">
+                <option {% if categoryId == -1 %} selected {% endif %}
+                        value="-1">Tous
+                </option>
+                {% for category in categories %}
+                    <option {% if category.id == categoryId %} selected {% endif %}
+                            value="{{category.id}}">{{category.name}}
+                    </option>
+                {% endfor %}
+            </select>
             <button type="submit" class="btn btn-sm btn-primary">Recherhcer</button>
         </form>
         <div class="container">

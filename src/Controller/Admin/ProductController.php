@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Category;
 use App\Entity\Product;
 use App\Form\ProductType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,10 +28,13 @@ class ProductController extends AbstractController
     {
         $page = $request->query->get('page', 1);
         $search = $request->query->get('search', '');
-        $products = $this->entity->getRepository(Product::class)->getAll($page, $search);
+        $categoryId = $request->query->get('category');
+        $products = $this->entity->getRepository(Product::class)->getAll($page, $search, $categoryId);
             return $this->render('admin/product/index.html.twig', [
             'products' => $products,
             'search' => $search,
+            'categories' => $this->entity->getRepository(Category::class)->findAll(),
+            'categoryId' => $categoryId,
         ]);
     }
 

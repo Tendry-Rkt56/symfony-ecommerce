@@ -29,7 +29,7 @@ class ProductRepository extends ServiceEntityRepository
 
     public function query(?int $categoryId = null, string $search)
     {
-        if ($categoryId == null || $categoryId != -1) {
+        if (!is_null($categoryId) && $categoryId != -1) {
             return $this->createQueryBuilder('p')->leftJoin('p.category', 'c')->select('p', 'c')->where('p.name LIKE :search')->andWhere('c.id = :id')->setParameter('search', '%'.$search.'%')->setParameter('id', $categoryId);
         }
         return $this->createQueryBuilder('p')->leftJoin('p.category', 'c')->select('p', 'c')->where('p.name LIKE :search')->setParameter('search', '%'.$search.'%');

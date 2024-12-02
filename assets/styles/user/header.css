@@ -1,0 +1,107 @@
+* {
+     margin:0;
+     padding:0;
+     box-sizing:border-box;
+     font-family:"Poppins", sans-serif;
+}
+
+html {
+     scroll-behavior: smooth;
+}
+
+header {
+     background-color: #4CAF50; /* Couleur de fond de la navbar */
+     color: white;
+     padding: 15px 30px;
+     text-align: center;
+ }
+
+ /* Logo texte dans la navbar */
+ .navbar-brand {
+     font-size: 2rem;
+     font-weight: bold;
+     text-transform: uppercase;
+     color: white;
+     text-decoration: none;
+     width:10%;
+ }
+
+ /* Styles de la navbar */
+ nav {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+ }
+
+ /* Menu de la navbar */
+ .navbar-menu {
+     display: flex;
+     list-style-type: none;
+     margin: 0;
+     padding: 0;
+ }
+
+ .navbar-menu li {
+     margin: 0 15px;
+ }
+
+ .navbar-menu a {
+     color: white;
+     text-decoration: none;
+     font-size: 1.1rem;
+     padding: 5px 10px;
+ }
+
+ .navbar-menu a:hover {
+     background-color: #3e8e41; /* Effet de survol */
+     border-radius: 5px;
+ }
+
+ /* Mobile view: Hamburger menu */
+ .hamburger {
+     display: none;
+     flex-direction: column;
+     justify-content: space-between;
+     width: 25px;
+     height: 20px;
+ }
+
+ .hamburger div {
+     background-color: white;
+     height: 3px;
+     width: 100%;
+ }
+
+ .containers {
+    position:absolute;
+    top:15%;
+    left:5%;
+}
+
+.forms {
+    box-shadow:0 0 3px rgba(0,0,0,0.1);
+    width:600px;
+    padding:20px 30px;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}
+
+ @media (max-width: 768px) {
+     .navbar-menu {
+         display: none;
+         width: 100%;
+         text-align: center;
+     }
+
+     .navbar-menu.active {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+     }
+
+     .hamburger {
+         display: flex;
+     }
+ }

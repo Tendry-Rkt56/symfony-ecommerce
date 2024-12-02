@@ -17,7 +17,10 @@
                                    {% set price = product.price * paniers[product.id] %}
                                    <p class="cart-item-price">{{price | number_format(2, ',', ' ')}} Ar</p>
                                    <input type="number" min="1" value="1" class="form-control cart-item-quantity">
-                                   <button class="btn remove-btn">Supprimer</button>
+                                   <form action="{{path('panier.delete', {id: product.id})}}" method="POST">
+                                        <input type="hidden" value="DELETE" name="_method">
+                                        <input type="submit" class="btn btn-danger btn-sm" value="Supprimer">
+                                   </form>
                               </div>
                          </div>
                     {% endfor %}

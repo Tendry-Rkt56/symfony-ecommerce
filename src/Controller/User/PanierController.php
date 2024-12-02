@@ -52,7 +52,7 @@ class PanierController extends AbstractController
     }
 
     // Rediriger vers la route appropriée (par exemple, la page panier)
-    return $this->redirectToRoute('user.products');
+    return $this->redirectToRoute('panier.index');
 }
 
 }

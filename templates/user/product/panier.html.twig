@@ -17,7 +17,10 @@
                                         <h2 class="cart-item-title">{{product.name}}</h2>
                                         {% set price = product.price * paniers[product.id] %}
                                         <p class="cart-item-price">{{price | number_format(2, ',', ' ')}} Ar</p>
-                                        <input type="number" min="1" value="1" class="form-control cart-item-quantity">
+                                        <form action="{{path('panier.addNumber', {id: product.id})}}" method="post" class="d-flex align-items-center justify-content-center" id="formNumber">
+                                             <input type="number" min="1" value="{{paniers[product.id]}}" name="nombre" class="nombre form-control cart-item-quantity">
+                                             <input disabled type="submit" class="envoyer btn btn-sm btn-primary" value="Ajouter">
+                                        </form>
                                         <form action="{{path('panier.delete', {id: product.id})}}" method="POST">
                                              <input type="hidden" value="DELETE" name="_method">
                                              <input type="submit" class="btn btn-danger btn-sm" value="Supprimer">
@@ -37,5 +40,7 @@
                
           </div>
      </main>
+
+     <script src="{{asset('script/panier.js')}}"></script>
 
 {% endblock %}

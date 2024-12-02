@@ -6,29 +6,35 @@
 {% block body %}
 
      <main>
-          <h1 class="main-title">Mon Panier</h1>
+          <h1 class="main-title">Votre Panier</h1>
           <div class="cart-container">
-               <div class="cart-items">
-                    {% for product in products %}
-                         <div class="cart-item">
-                              <img src="image/{{product.image}}" style="height:40px;width:40px;border-radius:50%" alt="Produit 1" class="cart-item-image">
-                              <div class="cart-item-details">
-                                   <h2 class="cart-item-title">{{product.name}}</h2>
-                                   {% set price = product.price * paniers[product.id] %}
-                                   <p class="cart-item-price">{{price | number_format(2, ',', ' ')}} Ar</p>
-                                   <input type="number" min="1" value="1" class="form-control cart-item-quantity">
-                                   <form action="{{path('panier.delete', {id: product.id})}}" method="POST">
-                                        <input type="hidden" value="DELETE" name="_method">
-                                        <input type="submit" class="btn btn-danger btn-sm" value="Supprimer">
-                                   </form>
+               {% if products is not empty %}
+                    <div class="cart-items">
+                         {% for product in products %}
+                              <div class="cart-item">
+                                   <img src="image/{{product.image}}" style="height:40px;width:40px;border-radius:50%" alt="Produit 1" class="cart-item-image">
+                                   <div class="cart-item-details">
+                                        <h2 class="cart-item-title">{{product.name}}</h2>
+                                        {% set price = product.price * paniers[product.id] %}
+                                        <p class="cart-item-price">{{price | number_format(2, ',', ' ')}} Ar</p>
+                                        <input type="number" min="1" value="1" class="form-control cart-item-quantity">
+                                        <form action="{{path('panier.delete', {id: product.id})}}" method="POST">
+                                             <input type="hidden" value="DELETE" name="_method">
+                                             <input type="submit" class="btn btn-danger btn-sm" value="Supprimer">
+                                        </form>
+                                   </div>
                               </div>
-                         </div>
-                    {% endfor %}
-               </div>
-               <div class="cart-summary">
-                    <h2>Total : <span id="total-price">{{total | number_format(2, ',', ' ')}} Ar</span></h2>
-                    <button class="btn checkout-btn">Passer la commande</button>
-               </div>
+                         {% endfor %}
+                    </div>
+                    <div class="cart-summary">
+                         <h2>Total : <span id="total-price">{{total | number_format(2, ',', ' ')}} Ar</span></h2>
+                         <button class="btn checkout-btn">Passer la commande</button>
+                    </div>
+               {% else %}
+                    <div class="container d-flex align-items-center justify-content-center">Panier encore vide</div>
+               {% endif %}
+
+               
           </div>
      </main>
 

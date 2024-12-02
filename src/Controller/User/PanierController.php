@@ -37,6 +37,7 @@ class PanierController extends AbstractController
             $paniers[$id] = 1;
         }
         $session->set('panier', $paniers);
+        $this->addFlash('success', 'Produit ajouté à votre panier');
         return $this->redirectToRoute('user.products');
     }
 

@@ -8,6 +8,12 @@
 {% block body %}
     <main>
         <h1 class="main-title">Catalogue de Produits</h1>
+        {% for type, message in app.flashes %}
+            <div class="alert alert-{{type}} container d-flex align-items-center justify-content-center text-align">
+                {{message | join('')}}
+            </div>
+        {% endfor %}
+        
         <div class="products-grid">
             {% for product in products %}
                 <div class="product-card">

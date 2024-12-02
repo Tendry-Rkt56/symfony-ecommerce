@@ -31,7 +31,9 @@
                     </div>
                     <div class="cart-summary">
                          <h2>Total : <span id="total-price">{{total | number_format(2, ',', ' ')}} Ar</span></h2>
-                         <button class="btn checkout-btn">Passer la commande</button>
+                         <form action="{{path('user.commande')}}" method="POST">
+                              <button class="btn checkout-btn" type="submit">Passer la commande</button>
+                         </form>
                     </div>
                {% else %}
                     <div class="container d-flex align-items-center justify-content-center">Panier encore vide</div>
@@ -40,8 +42,6 @@
                
           </div>
      </main>
-
-     
 
      <script src="{{asset('script/panier.js')}}"></script>
 

@@ -17,7 +17,9 @@
                     <div class="product-info d-flex align-items-center justify-content-center flex-column">
                         <h2 class="product-title">{{product.name}}</h2>
                         <p class="product-price">{{product.price | number_format(2, ',', ' ')}}</p>
-                        <button class="btn">Ajouter au panier</button>
+                        <form action="{{path('panier.add', {id: product.id})}}" method="POST">
+                            <input type="submit" value="Ajouter au panier" id="" class="btn">
+                        </form>
                     </div>
                 </div>
             {% endfor %}

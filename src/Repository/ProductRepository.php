@@ -25,6 +25,25 @@ class ProductRepository extends ServiceEntityRepository
         )->getSingleScalarResult();
     }
 
+    public function getTotal(array $ids = [])
+    {
+        return $this->getEntityManager()->createQuery(
+            "SELECT SUM(p.price) FROM App\\Entity\\Product p WHERE p.id IN (:id)"
+        )->setParameter(':id', $ids)->getSingleScalarResult();
+    }
+
+    public function getProductInPanier(array $ids = [])
+    {
+        $articles = $this->createQueryBuilder('p')
+                    ->where('p.id IN (:ids)')
+                    ->setParameter('ids', array_keys($ids))
+                    ->getQuery()
+                    ->getResult();
+
+        return $articles;
+        
+    }
+
     public function getAll(int $page, string $search = '', ?int $categoryId = null)
     {
         return $this->paginator->paginate(

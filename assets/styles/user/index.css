@@ -23,6 +23,7 @@
      text-align: center;
      height:300px;
      transition: transform 0.2s;
+     margin:10px 5px;
  }
  
  .product-card:hover {

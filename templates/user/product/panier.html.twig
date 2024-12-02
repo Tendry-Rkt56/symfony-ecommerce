@@ -1,0 +1,39 @@
+{% extends "user.html.twig" %}
+{% block title %} Votre panier {% endblock %}
+{% block styles %}
+     <link rel="stylesheet" href="{{asset('styles/user/panier.css')}}">
+{% endblock %}
+{% block body %}
+
+     <main>
+        <h1 class="main-title">Mon Panier</h1>
+        <div class="cart-container">
+            <div class="cart-items">
+                <!-- Les articles seront ajoutés dynamiquement ici -->
+                <div class="cart-item">
+                    <img src="product1.jpg" alt="Produit 1" class="cart-item-image">
+                    <div class="cart-item-details">
+                        <h2 class="cart-item-title">Produit 1</h2>
+                        <p class="cart-item-price">20,00 €</p>
+                        <input type="number" min="1" value="1" class="cart-item-quantity">
+                        <button class="btn remove-btn">Supprimer</button>
+                    </div>
+                </div>
+                <div class="cart-item">
+                    <img src="product2.jpg" alt="Produit 2" class="cart-item-image">
+                    <div class="cart-item-details">
+                        <h2 class="cart-item-title">Produit 2</h2>
+                        <p class="cart-item-price">35,00 €</p>
+                        <input type="number" min="1" value="1" class="cart-item-quantity">
+                        <button class="btn remove-btn">Supprimer</button>
+                    </div>
+                </div>
+            </div>
+            <div class="cart-summary">
+                <h2>Total : <span id="total-price">55,00 €</span></h2>
+                <button class="btn checkout-btn">Passer à la caisse</button>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}

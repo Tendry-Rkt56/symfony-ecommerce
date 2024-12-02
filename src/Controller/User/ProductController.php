@@ -32,4 +32,10 @@ class ProductController extends AbstractController
             'categoryId' => $categoryId,
         ]);
     }
+
+    #[Route('/panier', name: 'user.panier', methods:['GET'])]
+    public function paniers()
+    {
+        return $this->render('user/product/panier.html.twig');
+    }
 }

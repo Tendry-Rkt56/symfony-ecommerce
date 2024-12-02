@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -17,12 +18,19 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+    public function productsLength()
+    {
+        return $this->getEntityManager()->createQuery(
+            "SELECT COUNT(p.id) AS count FROM App\\Entity\\Product p WHERE p.id > 0"
+        )->getSingleScalarResult();
+    }
+
     public function getAll(int $page, string $search = '', ?int $categoryId = null)
     {
         return $this->paginator->paginate(
             $this->query($categoryId, $search),
             $page,
-            20, 
+            10, 
             []
         );
     }

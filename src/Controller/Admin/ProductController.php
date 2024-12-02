@@ -7,6 +7,7 @@ use App\Entity\Product;
 use App\Form\ProductType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -35,6 +36,7 @@ class ProductController extends AbstractController
             'search' => $search,
             'categories' => $this->entity->getRepository(Category::class)->findAll(),
             'categoryId' => $categoryId,
+            'count' => $this->entity->getRepository(Product::class)->productsLength(),
         ]);
     }
 
@@ -44,13 +46,14 @@ class ProductController extends AbstractController
         $product = new Product();
         $form = $this->createForm(ProductType::class, $product, [
             'attr' => [
-                'class' => 'forms'
+                'class' => 'forms d-flex align-items-center justify-content-center gap-2 flex-column'
             ]
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $product->setSlug($slugger->slug($form->get('name')->getData(), '-'))
+                    ->setImage($this->checkImage($form->get('image')->getData(), $product, 'products', 'products'))
                     ->setCreatedAt(new \DateTimeImmutable())
                     ->setUpdatedAt(new \DateTimeImmutable());
             $this->entity->persist($product);
@@ -69,7 +72,7 @@ class ProductController extends AbstractController
     {
         $form = $this->createForm(ProductType::class, $product, [
             'attr' => [
-                'class' => 'forms'
+                'class' => 'forms d-flex align-items-center justify-content-center gap-2 flex-column'
             ]
         ]);
 
@@ -77,6 +80,7 @@ class ProductController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $product->setSlug($slugger->slug($form->get('name')->getData(), '-'))
+                    ->setImage($this->checkImage($form->get('image')->getData(), $product, 'products', 'products'))
                     ->setUpdatedAt(new \DateTimeImmutable());
             $this->entity->flush();
             $this->addFlash('success', 'Produit N°'.$product->getId(). ' mis à jour');
@@ -89,9 +93,32 @@ class ProductController extends AbstractController
         ]);
     }
 
+    private function checkImage(?UploadedFile $file, mixed $object, string $directory = '', string $prefix = ''): ?string
+    {
+        if (!$file instanceof UploadedFile && $file == null && $object->getImage() == null) return null;
+        if (!$file instanceof UploadedFile && $object->getImage() !== null) return $object->getImage();
+        else {
+            $this->deleteImage($object);
+            $fileName = md5(uniqid($prefix)).'.'.$file->guessExtension();
+            $file->move($this->getParameter('kernel.project_dir').'/public/image/'.$directory.'/',$fileName);
+            return $directory.'/'.$fileName;
+        }
+    }
+
+    private function deleteImage(mixed $object)
+    {
+        if ($object->getImage()) {
+            $path = $this->getParameter('kernel.project_dir').'/public/image/'.$object->getImage();
+            if (file_exists($path)) {
+                unlink($path);
+            }
+        } 
+    }
+
     #[Route('/delete/{id}', name: 'delete', methods:['DELETE'])]
     public function delete(Product $product)
     {
+        $this->deleteImage($product);
         $id = $product->getId();
         $this->entity->remove($product);
         $this->entity->flush();

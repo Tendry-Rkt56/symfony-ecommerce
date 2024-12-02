@@ -3,12 +3,27 @@
 {% block body %}
 
      {{form_start(form)}}
+          <div class="align-self-start my-4 d-flex align-items-center justify-content-center flex-column gap-2">
+               <h2>Edition</h2>
+               {% if product.image %}
+                    <img src="/image/{{product.image}}" style="height:100px;width:120px;border-radius:50%" alt="">
+               {% endif %}
+               
+          </div>
           <div class="row">
                <div class="col-sm">
                     {{form_row(form.name)}}
                </div>
                <div class="col-sm">
                     {{form_row(form.price)}}
+               </div>
+          </div>
+          <div class="row">
+               <div class="col-sm">
+                    {{form_row(form.category)}}
+               </div>
+               <div class="col-sm">
+                    {{form_row(form.image)}}
                </div>
           </div>
      {{form_end(form)}}

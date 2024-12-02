@@ -52,7 +52,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($this->urlGenerator->generate('admin.dashboard'));
         }
         elseif ($this->security->isGranted('ROLE_USER')) {
-            return new RedirectResponse($this->urlGenerator->generate('users.index'));
+            return new RedirectResponse($this->urlGenerator->generate('user.products'));
         }
 
         // For example:

@@ -8,7 +8,7 @@
 {% block body %}
     <main>
         <h1 class="main-title">Catalogue de Produits</h1>
-        
+
         {% for type, message in app.flashes %}
             <div class="alert alert-{{type}} container d-flex align-items-center justify-content-center text-align">
                 {{message | join('')}}
@@ -23,7 +23,7 @@
                     {% endif %}
                     <div class="product-info d-flex align-items-center justify-content-center flex-column">
                         <h2 class="product-title">{{product.name}}</h2>
-                        <p class="product-price">{{product.price | number_format(2, ',', ' ')}}</p>
+                        <p class="product-price">{{product.price | number_format(2, ',', ' ')}} €</p>
                         <form class="form" action="{{path('panier.add', {id: product.id})}}" method="POST">
                             <input type="submit" value="Ajouter au panier" id="" class="btns">
                         </form>

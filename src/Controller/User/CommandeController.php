@@ -39,6 +39,24 @@ class CommandeController extends AbstractController
         return $this->redirectToRoute('user.products');
     }
 
+    #[Route('/suggestion', name: 'suggestion.store', methods:['POST'])]
+    public function commandesSuggestions(SessionInterface $session, EventDispatcherInterface $event)
+    {
+        $commande = new Commande();
+        $paniers = $session->get('suggestion');
+        $commande->setUser($this->getUser())
+            ->setCreatedAt(new \DateTimeImmutable())
+            ->setTotal($this->getTotal($paniers));
+        
+        $this->entity->persist($commande);
+        $this->entity->flush();
+
+        $event->dispatch(new DetailsEvent($commande, $paniers));
+        $this->addFlash('success', 'Votre commande a été passée');
+        $session->set('suggestion', []);
+        return $this->redirectToRoute('user.products');
+    }
+
     private function getTotal(array $paniers = [])
     {
         $ids = array_keys($paniers);

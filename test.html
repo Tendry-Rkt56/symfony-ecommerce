@@ -1,208 +1,142 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Commerce - Panier</title>
-    <style>
-        /* Global Reset */
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
-        }
-
-        /* Header - Navbar */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .navbar-links a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-            font-size: 1rem;
-            text-transform: uppercase;
-            transition: color 0.3s;
-        }
-
-        .navbar-links a:hover {
-            color: #d4f1d4;
-        }
-
-        .logout-link {
-            background-color: #ff4d4d;
-            padding: 5px 10px;
-            border-radius: 5px;
-            text-transform: uppercase;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-
-        .logout-link:hover {
-            background-color: #e60000;
-        }
-
-        /* Main Title */
-        .main-title {
-            text-align: center;
-            padding: 20px;
-            margin: 0;
-        }
-
-        /* Cart Container */
-        .cart-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 20px auto;
-            width: 90%;
-            max-width: 800px;
-        }
-
-        /* Cart Items */
-        .cart-items {
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .cart-item {
-            display: flex;
-            align-items: center;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            margin-bottom: 10px;
-        }
-
-        .cart-item-image {
-            width: 80px;
-            height: auto;
-            border-radius: 8px;
-            margin-right: 15px;
-        }
-
-        .cart-item-details {
-            flex: 1;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .cart-item-title {
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-
-        .cart-item-price {
-            font-size: 1rem;
-            font-weight: bold;
-            color: #4CAF50;
-            margin-bottom: 5px;
-        }
-
-        .cart-item-quantity {
-            width: 60px;
-            padding: 5px;
-            text-align: center;
-            margin-right: 10px;
-        }
-
-        .remove-btn {
-            background-color: #ff4d4d;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .remove-btn:hover {
-            background-color: #e60000;
-        }
-
-        /* Cart Summary */
-        .cart-summary {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .checkout-btn {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .checkout-btn:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <title>Panier d'Achat</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Header avec barre de navigation -->
-    <header class="navbar">
-        <div class="navbar-brand">E-Commerce</div>
-        <nav class="navbar-links">
-            <a href="#produits">Produits</a>
-            <a href="#panier">Panier</a>
-            <a href="#profil">Profil</a>
-            <a href="#deconnexion" class="logout-link">Déconnexion</a>
-        </nav>
+
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.item-image img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.item-details {
+    flex: 1;
+    margin-left: 20px;
+}
+
+.item-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.item-actions button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.item-actions button:hover {
+    background-color: #45a049;
+}
+
+.cart-summary {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.cart-summary h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.btn-checkout {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.btn-checkout:hover {
+    background-color: #45a049;
+}
+
+    </style>
+
+    <header class="header">
+        <h1>Votre Panier</h1>
     </header>
 
-    <!-- Section Panier -->
-    <main>
-        <h1 class="main-title">Mon Panier</h1>
-        <div class="cart-container">
-            <div class="cart-items">
-                <!-- Les articles seront ajoutés dynamiquement ici -->
-                <div class="cart-item">
-                    <img src="product1.jpg" alt="Produit 1" class="cart-item-image">
-                    <div class="cart-item-details">
-                        <h2 class="cart-item-title">Produit 1</h2>
-                        <p class="cart-item-price">20,00 €</p>
-                        <input type="number" min="1" value="1" class="cart-item-quantity">
-                        <button class="btn remove-btn">Supprimer</button>
-                    </div>
-                </div>
-                <div class="cart-item">
-                    <img src="product2.jpg" alt="Produit 2" class="cart-item-image">
-                    <div class="cart-item-details">
-                        <h2 class="cart-item-title">Produit 2</h2>
-                        <p class="cart-item-price">35,00 €</p>
-                        <input type="number" min="1" value="1" class="cart-item-quantity">
-                        <button class="btn remove-btn">Supprimer</button>
-                    </div>
+    <main class="container">
+        <div class="cart-item">
+            <div class="item-image">
+                <img src="https://via.placeholder.com/100" alt="Produit 1">
+            </div>
+            <div class="item-details">
+                <h3>Produit 1</h3>
+                <p>Prix : 15€</p>
+                <div class="item-actions">
+                    <button class="btn-decrement">-</button>
+                    <span class="quantity">2</span>
+                    <button class="btn-increment">+</button>
                 </div>
             </div>
-            <div class="cart-summary">
-                <h2>Total : <span id="total-price">55,00 €</span></h2>
-                <button class="btn checkout-btn">Passer à la caisse</button>
+        </div>
+
+        <div class="cart-item">
+            <div class="item-image">
+                <img src="https://via.placeholder.com/100" alt="Produit 2">
             </div>
+            <div class="item-details">
+                <h3>Produit 2</h3>
+                <p>Prix : 20€</p>
+                <div class="item-actions">
+                    <button class="btn-decrement">-</button>
+                    <span class="quantity">1</span>
+                    <button class="btn-increment">+</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="cart-summary">
+            <h2>Total : 50€</h2>
+            <button class="btn-checkout">Passer à la caisse</button>
         </div>
     </main>
 </body>

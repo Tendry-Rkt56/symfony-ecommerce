@@ -44,12 +44,12 @@ class ProductRepository extends ServiceEntityRepository
         
     }
 
-    public function getAll(int $page, string $search = '', ?int $categoryId = null)
+    public function getAll(int $page, string $search = '', ?int $categoryId = null, int $limit = 20)
     {
         return $this->paginator->paginate(
             $this->query($categoryId, $search),
             $page,
-            10, 
+            $limit, 
             []
         );
     }

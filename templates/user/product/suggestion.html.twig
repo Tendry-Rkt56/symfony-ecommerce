@@ -1,5 +1,5 @@
 {% extends "user.html.twig" %}
-{% block title %} Votre panier {% endblock %}
+{% block title %} Suggestion d'achat {% endblock %}
 {% block styles %}
      <link rel="stylesheet" href="{{asset('styles/user/panier.css')}}">
 {% endblock %}
@@ -7,21 +7,21 @@
 
      <main>
           <h1 class="main-title">Votre Panier</h1>
+          <form class="d-flex aligns-self-start align-items-center justify-content-center flex-row gap-3" action="" method="GET">
+               <input type="number" value="{{budget}}" name="budget" id="" class="form-control" placeholder="Entrer votre budget..." style="width:30%">
+               <input type="submit" id="" class="btn btn-primary btn-sm" value="Envoyer">
+               <a href="" class="btn btn-info btn-sm">Changer</a>
+          </form>
           <div class="cart-container">
-               {% if products is not empty %}
+               {% if suggestions is not empty %}
                     <div class="cart-items">
-                         {% for product in products %}
+                         {% for product in suggestions %}
                               <div class="cart-item">
                                    <img src="image/{{product.image}}" style="height:40px;width:40px;border-radius:50%" alt="Produit 1" class="cart-item-image">
                                    <div class="cart-item-details">
-                                        <h2 class="cart-item-title">{{product.name}}</h2>
-                                        {% set price = product.price * paniers[product.id] %}
-                                        <p class="cart-item-price">{{price | number_format(2, ',', ' ')}} €</p>
-                                        <form action="{{path('panier.addNumber', {id: product.id})}}" method="post" class="d-flex align-items-center justify-content-center" id="formNumber">
-                                             <input type="number" min="1" value="{{paniers[product.id]}}" name="nombre" class="nombre form-control cart-item-quantity">
-                                             <input disabled type="submit" class="envoyer btn btn-sm btn-primary" value="Ajouter">
-                                        </form>
-                                        <form action="{{path('panier.delete', {id: product.id})}}" method="POST">
+                                        <h2 style="width:40%" class="cart-item-title">{{product.name}}</h2>
+                                        <p style="width:40%" class="cart-item-price">{{product.price | number_format(2, ',', ' ')}} €</p>
+                                        <form style="width:20%" action="{{path('panier.delete', {id: product.id})}}" method="POST">
                                              <input type="hidden" value="DELETE" name="_method">
                                              <input type="submit" class="btn btn-danger btn-sm" value="Supprimer">
                                         </form>
@@ -31,18 +31,16 @@
                     </div>
                     <div class="cart-summary">
                          <h2>Total : <span id="total-price">{{total | number_format(2, ',', ' ')}} €</span></h2>
-                         <form action="{{path('user.commande')}}" method="POST">
+                         <form action="{{path('suggestion.store')}}" method="POST">
                               <button class="btn checkout-btn" type="submit">Passer la commande</button>
                          </form>
                     </div>
                {% else %}
-                    <div class="container d-flex align-items-center justify-content-center">Panier encore vide</div>
+                    <div class="container d-flex align-items-center justify-content-center">Veillez entrer votre budget</div>
                {% endif %}
 
                
           </div>
      </main>
-
-     <script src="{{asset('script/panier.js')}}"></script>
 
 {% endblock %}

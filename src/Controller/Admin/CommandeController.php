@@ -36,6 +36,15 @@ class CommandeController extends AbstractController
         return $this->redirectToRoute('admin.commande.index');
     }
 
+    #[Route('/{id}-update', name: 'update', methods:['POST'])]
+    public function update(Commande $commande)
+    {
+        $commande->setCompleted(true);
+        $this->entity->flush();
+        $this->addFlash('success', 'Commande mise à jour');
+        return $this->redirectToRoute('admin.commande.details', ['id' => $commande->getId()]);
+    }
+
     #[Route('/{id}', name: 'details', methods:['GET'])]
     public function details(Commande $commande)
     {

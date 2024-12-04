@@ -25,4 +25,13 @@ class CommandeController extends AbstractController
             'commandes' => $commandes,
         ]);
     }
+
+    #[Route('/{id}/delete', name: 'delete', methods: ['DELETE'])]
+    public function delete(Commande $commande)
+    {
+        $this->entity->remove($commande);
+        $this->entity->flush();
+        $this->addFlash('danger', 'Commande supprimée');
+        return $this->redirectToRoute('admin.commande.index');
+    }
 }

@@ -23,7 +23,7 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/commande', name: 'user.commande', methods:['POST'])]
-    public function commande(SessionInterface $session, EventDispatcherInterface $event)
+    public function commande(SessionInterface $session, EventDispatcherInterface $event): Response
     {
         $commande = new Commande();
         $paniers = $session->get('panier');

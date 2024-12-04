@@ -1,20 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CommandeController!{% endblock %}
+{% block title %}Les commandes !{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="containers d-flex align-items-center justify-content-center flex-column gap-3 container">
+        <div class="d-flex align-items-center justify-content-between container-fluid">
+            <h2>Les commandes</h2>
+        </div>
+        <div class="container">
+            {% for type, message in app.flashes %}
+                <div class="d-flex align-items-center justify-content-center container alert alert-{{type}}">{{message | join('')}}</div>
+            {% endfor %}
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nom du client</th>
+                    <th>Email</th>
+                    <th>Total</th>
+                    <th>Date d'ajout</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if commandes is not empty %}
+                    {% for commande in commandes %}
+                        <tr>
+                            <td class="fw-bolder">{{commande.user.username}}</td>
+                            <td>{{commande.user.email}}</td>
+                            <td class="fw-bolder">{{commande.total | number_format(2, ',', ' ')}} €</td>
+                            <td>{{commande.createdAt | date("d F y H:i") }}</td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    <a href=""class="btn btn-sm btn-success">Détails</a>
+                                    <form action="" method="POST">
+                                        <input type="hidden" name="_method" value="DELETE" id="">
+                                        <input type="submit" class="btn btn-sm btn-danger" value="Supprimer">
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">Pas de produit correspondant</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/Tendry/Desktop/PHPProject/ecommerceSymfony/src/Controller/Admin/CommandeController.php</code></li>
-        <li>Your template at <code>C:/Users/Tendry/Desktop/PHPProject/ecommerceSymfony/templates/admin/commande/index.html.twig</code></li>
-    </ul>
-</div>
 {% endblock %}

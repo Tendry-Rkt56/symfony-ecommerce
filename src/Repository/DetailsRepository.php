@@ -16,6 +16,17 @@ class DetailsRepository extends ServiceEntityRepository
         parent::__construct($registry, Details::class);
     }
 
+    public function details(int $id)
+    {
+        return $this->createQueryBuilder('d')
+                ->join('d.commande', 'c')
+                ->join('d.product', 'p')
+                ->where('c.id = :id')
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->getResult();
+    }
+
     //    /**
     //     * @return Details[] Returns an array of Details objects
     //     */

@@ -60,7 +60,7 @@ class CommandeController extends AbstractController
 
     private function getTotal(array $paniers = [])
     {
-        $ids = $paniers;
+        $ids = array_keys($paniers);
         $products = $this->entity->getRepository(Product::class)->getProductInPanier($ids);
         $total = 0;
         foreach($products as $product) {

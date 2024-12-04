@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Commande;
+use App\Entity\Details;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,5 +34,15 @@ class CommandeController extends AbstractController
         $this->entity->flush();
         $this->addFlash('danger', 'Commande supprimée');
         return $this->redirectToRoute('admin.commande.index');
+    }
+
+    #[Route('/{id}', name: 'details', methods:['GET'])]
+    public function details(Commande $commande)
+    {
+        $details = $this->entity->getRepository(Details::class)->details($commande->getId());
+        return $this->render('admin/commande/details.html.twig', [
+            'commande' => $commande,
+            'details' => $details,
+        ]);
     }
 }

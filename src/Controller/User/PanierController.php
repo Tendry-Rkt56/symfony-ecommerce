@@ -16,7 +16,7 @@ class PanierController extends AbstractController
     public function paniers(SessionInterface $session, ProductRepository $repository)
     {
         $paniers = $session->get('panier');
-        $products = $repository->getProductInPanier($paniers);
+        $products = $repository->getProductInPanier(array_keys($paniers));
         $total = 0;
         foreach($products as $product) {
             $total += $product->getPrice() * $paniers[$product->getId()];

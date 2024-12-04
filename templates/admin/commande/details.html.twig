@@ -1,0 +1,54 @@
+{% extends "base.html.twig" %}
+{% block title %} Details du commande N° {{commande.id}} {% endblock %}
+{% block styles %}
+     <link rel="stylesheet" href="{{asset('styles/user/panier.css')}}">
+{% endblock %}
+{% block body %}
+
+     
+     <main>
+          <h1 class="main-title">Commande N°{{commande.id}}</h1>
+          <div class="cart-container">
+               <div class="my-4 align-self-start d-flex align-items-start justify-content-center flex-column">
+                    <div class="d-flex align-items-start justify-content-center flex-row gap-2">
+                    {% if commande.user.image %}
+                         <img src="/image/{{commande.user.image}}"  style="height:40px;width:40px;border-radius:50%">
+                    {% endif %}
+                    <h3>{{commande.user.username}}</h3>
+               </div>
+               <p>Date de la commande: <span class="fw-bolder">{{commande.createdAt | date('d F Y H:i')}}</span></p>
+               <p>Status: <span style="color:{{commande.completed == true ? 'green' : 'orangered'}}">{{commande.completed == false ? 'Commande non-effectuée' : 'Commande efféctuée'}}</span></p>
+               </div>
+               {% if details is not empty %}
+                    <div class="cart-items">
+                         {% for detail in details %}
+                              <div class="cart-item">
+                                   <img src="/image/{{detail.product.image}}" style="height:40px;width:40px;border-radius:50%" alt="Produit 1" class="cart-item-image">
+                                   <div class="cart-item-details">
+                                        <h2 style="width:40%" class="cart-item-title">{{detail.product.name}}</h2>
+                                        <p style="width:20%">Prix: <span class="fw-bolder">{{detail.product.price | number_format(2, ',', ' ')}} €</span></p>
+                                        <p style="width:20%">Nombre: <span class="fw-bolder">{{detail.nombre}}</span></p>
+                                        {% set price = detail.product.price * detail.nombre %}
+                                        <p style="width:20%" class="cart-item-price">{{price | number_format(2, ',', ' ')}} €</p>
+                                   </div>
+                              </div>
+                         {% endfor %}
+                    </div>
+                    <div class="cart-summary">
+                         <h2>Total : <span id="total-price">{{commande.total | number_format(2, ',', ' ')}} €</span></h2>
+                         <form action="{{path('user.commande')}}" method="POST">
+                         {% if commande.completed == false %}
+                              <form action="" method="POST">
+                                   <input type="submit" class="btn btn-success" value="Effecteur la commande">
+                              </form>
+                         {% endif %}
+                         </form>
+                    </div>
+               {% else %}
+                    <div class="container d-flex align-items-center justify-content-center">Panier encore vide</div>
+               {% endif %}
+               
+          </div>
+     </main>
+
+{% endblock %}

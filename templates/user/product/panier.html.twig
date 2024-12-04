@@ -12,7 +12,7 @@
                     <div class="cart-items">
                          {% for product in products %}
                               <div class="cart-item">
-                                   <img src="image/{{product.image}}" style="height:40px;width:40px;border-radius:50%" alt="Produit 1" class="cart-item-image">
+                                   <img src="/image/{{product.image}}" style="height:40px;width:40px;border-radius:50%" alt="Produit 1" class="cart-item-image">
                                    <div class="cart-item-details">
                                         <h2 class="cart-item-title">{{product.name}}</h2>
                                         {% set price = product.price * paniers[product.id] %}

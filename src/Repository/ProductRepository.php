@@ -36,7 +36,7 @@ class ProductRepository extends ServiceEntityRepository
     {
         $articles = $this->createQueryBuilder('p')
                     ->where('p.id IN (:ids)')
-                    ->setParameter('ids', array_keys($ids))
+                    ->setParameter('ids', $ids)
                     ->getQuery()
                     ->getResult();
 

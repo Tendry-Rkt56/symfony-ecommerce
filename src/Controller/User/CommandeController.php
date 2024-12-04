@@ -5,6 +5,7 @@ namespace App\Controller\User;
 use App\Entity\Commande;
 use App\Entity\Product;
 use App\Event\DetailsEvent;
+use App\Event\SuggestionEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -46,12 +47,12 @@ class CommandeController extends AbstractController
         $paniers = $session->get('suggestion');
         $commande->setUser($this->getUser())
             ->setCreatedAt(new \DateTimeImmutable())
-            ->setTotal($this->getTotal($paniers));
+            ->setTotal($this->getTotalInSuggestion($paniers));
         
         $this->entity->persist($commande);
         $this->entity->flush();
 
-        $event->dispatch(new DetailsEvent($commande, $paniers));
+        $event->dispatch(new SuggestionEvent($commande, $paniers));
         $this->addFlash('success', 'Votre commande a été passée');
         $session->set('suggestion', []);
         return $this->redirectToRoute('user.products');
@@ -59,7 +60,7 @@ class CommandeController extends AbstractController
 
     private function getTotal(array $paniers = [])
     {
-        $ids = array_keys($paniers);
+        $ids = $paniers;
         $products = $this->entity->getRepository(Product::class)->getProductInPanier($ids);
         $total = 0;
         foreach($products as $product) {
@@ -67,5 +68,15 @@ class CommandeController extends AbstractController
         }
         return $total;
     } 
+
+    private function getTotalInSuggestion(array $paniers = [])
+    {
+        $products = $this->entity->getRepository(Product::class)->getProductInPanier($paniers);
+        $total = 0;
+        foreach($products as $product) {
+            $total += $product->getPrice();
+        }
+        return $total;
+    }
 
 }

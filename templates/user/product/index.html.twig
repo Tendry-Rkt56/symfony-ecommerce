@@ -42,7 +42,10 @@
         <div class="error-content">
             <h3>Action non autorisée</h3>
             <p>Vous devez être connecté pour effectuer cette action.</p>
-            <button id="close-error">Fermer</button>
+            <div class="d-flex align-items-center justify-content-center flex-row gap-1">
+                <button class="btn btn-sm btn-danger" id="close-error">Fermer</button>
+                <a class="btn btn-sm btn-primary" href="{{path('app.register')}}">Créer un compte</a>
+            </div>
         </div>
     </div>
 

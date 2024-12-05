@@ -109,17 +109,6 @@
      margin-bottom: 20px;
  }
  
- /* Bouton */
- .error-content button {
-     background: #d9534f;
-     color: #fff;
-     border: none;
-     padding: 10px 15px;
-     border-radius: 5px;
-     cursor: pointer;
-     font-size: 14px;
-     transition: background-color 0.3s;
- }
  
  .error-content button:hover {
      background: #c9302c;

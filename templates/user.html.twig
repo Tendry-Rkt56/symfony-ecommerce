@@ -28,7 +28,7 @@
                {% if is_granted('ROLE_ADMIN') %}
                     <select id="select" style="width:20%" class="form-select">
                          <option {% if 'admin.' in app.current_route %} selected {% endif %} value="/dashboard">Administration</option>
-                         <option {% if 'user.' in app.current_route %} selected {% endif %} value="/">Utilisateur</option>
+                         <option {% if 'user.' or 'panier.' in app.current_route %} selected {% endif %} value="/">Utilisateur</option>
                     </select>
                {% endif %}
 

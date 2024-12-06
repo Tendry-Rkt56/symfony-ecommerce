@@ -60,7 +60,8 @@ class UserType extends AbstractType
                 ],
                 'attr' => [
                     'class' => 'form-control',
-                ]
+                ], 
+                'mapped' => false,
             ])
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer',

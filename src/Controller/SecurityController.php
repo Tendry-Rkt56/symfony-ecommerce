@@ -6,17 +6,21 @@ use App\Entity\User;
 use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
 
-    public function __construct(private EntityManagerInterface $entity)
+    public function __construct(
+        private EntityManagerInterface $entity,
+        private Security $security)
     {
         
     }
@@ -64,6 +68,34 @@ class SecurityController extends AbstractController
         return $this->render('security/register.html.twig', [
             'form' => $form,
         ]);
+    }
+
+    #[Route('/profil/update', name: 'user.profil.update', methods:['GET', 'POST'])]
+    public function update(Request $request, UserPasswordHasherInterface $hasher)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserType::class, $user, [
+            'attr' => [
+                'class' => 'forms d-flex align-items-center justify-content-center gap-2 flex-column'
+            ]
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword($hasher->hashPassword($user, $form->get('password')->getData()))
+                ->setImage($this->image($form->get('image')->getData(), $user, 'user', 'user'))
+                ->setUpdatedAt(new \DateTimeImmutable());
+            $this->entity->persist($user);
+            $this->entity->flush();
+            if ($this->security->isGranted('ROLE_ADMIN')) return $this->redirectToRoute('admin.dashboard');
+            return $this->redirectToRoute('user.products');
+        }
+        return $this->render('security/update.html.twig', [
+            'form' => $form,
+            'user' => $user,
+        ]);
+
     }
 
     private function image(?UploadedFile $file, User $user, string $directory = '', string $prefix = '')

@@ -1,0 +1,35 @@
+{% extends "user.html.twig" %}
+{% block title %} Edition de profil {% endblock %}
+{% block body %}
+
+     <div class="container-fluid d-flex align-items-center justify-content-center flex-column gap-2">
+          {{form_start(form)}}
+               
+               <div class="my-3 align-self-start d-flex align-items-start justify-content-center flex-column gap-2">
+                    <h2 class="mb-2 align-self-start">Edition de <span style="border-bottom:3px solid orangered;">com</span>pte</h2>
+                    {% if app.user.image %}
+                         <img src="/image/{{app.user.image}}" style="height:50px;width:50px;border-radius:50%;" alt="">
+                    {% endif %}
+               </div>
+               
+               <div class="row">
+                    <div class="col-sm">
+                         {{form_row(form.username)}}
+                    </div>
+                    <div class="col-sm">
+                         {{form_row(form.email)}}
+                    </div>
+               </div>
+               <div class="row">
+                    <div class="col-sm">
+                         {{form_row(form.password)}}
+                    </div>
+                    <div class="col-sm">
+                         {{form_row(form.image)}}
+                    </div>
+               </div>
+          {{form_end(form)}}
+     </div>
+
+
+{% endblock %}

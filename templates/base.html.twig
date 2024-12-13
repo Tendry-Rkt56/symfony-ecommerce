@@ -27,7 +27,7 @@
                </div>
 
                {% if is_granted('ROLE_ADMIN') %}
-                    <select id="select" style="width:20%" class="form-select">
+                    <select id="select" style="width:10%" class="form-select">
                          <option {% if 'admin.' in app.current_route %} selected {% endif %} value="/dashboard">Administration</option>
                          <option {% if not 'admin.' in app.current_route %} selected {% endif %} value="/">Utilisateur</option>
                     </select>
@@ -40,6 +40,7 @@
                     <li><a href="{{path('admin.products.index')}}">Produits</a></li>
                     <li><a href="{{path('admin.category.index')}}">Catégories</a></li>
                     <li><a href="{{path('admin.user.index')}}">Clients</a></li>
+                    <li><a href="{{path('admin.commande.index')}}">Commandes</a></li>
                     <li><a href="{{path('admin.profil')}}">Votre profil</a></li>
                     <li>
                          <form action="{{path('app.logout')}}" method="POST">

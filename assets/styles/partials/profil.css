@@ -2,8 +2,8 @@
      border-radius:7px;
      display:flex;
      align-items:center;
-     justify-content:space-between;
-     flex-direction: row;
+     justify-content:center;
+     flex-direction: column;
      height:400px;
      width:60%;
      position: fixed;
@@ -15,7 +15,6 @@
  }
  
  .profil .user-info {
-     width:60%;
      height:100%;
      display:flex;
      justify-content:center;
@@ -26,14 +25,12 @@
  .nom {
      letter-spacing:2px;
      font-weight:bolder;
-     font-family:monospace;
-     font-style:italic;
+     font-family:"Poppins";
      font-size:30Px;
  }
  .prenom {
      font-weight:100;
-     font-family:monospace;
-     font-style:italic;
+     font-family:"Poppins";
      font-size:30Px;
  }
  
@@ -52,13 +49,12 @@
  .description {
      width:70%;
      text-align:left;
-     font-style:italic;
      font-size:14px;
      font-weight:200;
  }
  
  .email {
      font-size:14px;
-     font-family:monospace;
-     font-weight:50;
+     font-family:"Poppins";
+     font-weight:600;
  }

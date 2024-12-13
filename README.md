@@ -48,7 +48,7 @@ Suivez les étapes ci-dessous pour configurer le projet localement :
 8. **Lancez le serveur local Symfony**
 
     ```bash
-    php bin/console server:run
+    symfony server:start
 
 
   

@@ -23,10 +23,10 @@ class AppFixtures extends Fixture
         $faker = Factory::create('fr_FR');
 
         $user = new User();
-        $user->setUsername("Tendry Rkt")
+        $user->setUsername("Admin 01")
             ->setRoles(['ROLE_ADMIN'])
-            ->setEmail('tendry@gmail.com')
-            ->setSlug($this->slugger->slug('Tendry Rkt'))
+            ->setEmail('admin@gmail.com')
+            ->setSlug($this->slugger->slug('admin 01'))
             ->setPassword($this->hasher->hashPassword($user, '0000'))
             ->setImage(null)
             ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTime()))

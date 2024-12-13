@@ -29,6 +29,22 @@ class ProfilController extends AbstractController
           return $this->redirect($refer);
      }
 
+     #[Route('/profil', name: 'user.profil', methods:['GET'])]
+     public function profil()
+     {
+          return $this->render('user/profil.html.twig', [
+               'user' => $this->getUser(),
+          ]);
+     }
+
+     #[Route('/admin/profil', name: 'admin.profil', methods:['GET'])]
+     public function profilAdmin()
+     {
+          return $this->render('admin/profil.html.twig', [
+               'user' => $this->getUser(),
+          ]);
+     }
+
      private function image(?UploadedFile $file, User $user, string $directory = '', string $prefix = '')
      {
           if (!$file instanceof UploadedFile && $file == null && $user->getImage() == null) return null;

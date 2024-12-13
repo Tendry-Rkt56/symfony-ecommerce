@@ -28,7 +28,7 @@ class ProductFixtures extends Fixture
             $foodName = $faker->foodName();
             $product = (new Product())
                         ->setName($foodName)
-                        ->setPrice($faker->numberBetween(1000, 1000000))
+                        ->setPrice($faker->numberBetween(0.99, 100))
                         ->setSlug($this->slugger->slug($foodName, '-'))
                         ->setCategory($this->getReference($categories[$faker->numberBetween(0, 3)]))
                         ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTime()))

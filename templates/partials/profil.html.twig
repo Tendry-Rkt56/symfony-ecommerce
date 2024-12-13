@@ -1,0 +1,29 @@
+<div class="container my-4" style="position:absolute;z-index:2;">
+     {% for type, message in app.flashes %}
+         <div style="text-align:center;" class="container d-flex align-items-center justify-content-center alert alert-{{type}}">
+             {{ message | join('.') }}
+         </div>
+     {% endfor %}
+</div>
+<div class="profil">
+    <div class="image-user d-flex align-items-center">
+          <div class="d-flex align-items-center justify-content-center flex-column" style="width:100%">
+               {% if user.image is not empty %}
+                    <img style="height:100px;width:100px;border-radius:50%" src="/image/users/{{ user.image }}" class="image">
+               {% else %}
+                    <img style="height:100px;width:100px;border-radius:50%" src="/image/users/1077114.png" class="image">
+               {% endif %}
+               {% if app.user.id == user.id %}
+                    <form id="form-profil" enctype="multipart/form-data" method="POST" action="" class="my-5 gap-2 container-fluid d-flex align-items-center justify-content-center flex-row">
+                         <input id="imageFile" type="file" name="imageFile" class="form-control">
+                         <button type="submit" class="btn btn-sm btn-primary">Changer</button>
+                    </form>
+               {% endif %}
+               
+        </div>
+    </div>
+    <div class="user-info">
+        <h2 class="nom">{{ user.username }}</h2>
+        <p class="email justify-content-end mt-4 mb-2">email: {{ user.email }}</p>
+    </div>
+</div>

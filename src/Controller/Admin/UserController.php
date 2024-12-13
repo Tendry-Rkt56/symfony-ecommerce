@@ -20,6 +20,14 @@ class UserController extends AbstractController
         
     }
 
+    #[Route('/{id}-{slug}', name:'profil', methods:['GET'])]
+    public function show(User $user)
+    {
+        return $this->render('admin/user/profil.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(Request $request): Response
     {

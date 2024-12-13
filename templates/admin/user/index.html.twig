@@ -35,7 +35,7 @@
                         <tr>
                             <td>
                                 {% if user.image is not empty %}
-                                    <img src="/image/users/{{user.image}}" style="height:30px;width:30px;border-radius:50%">
+                                    <img src="/image/{{user.image}}" style="height:30px;width:30px;border-radius:50%">
                                 {% endif %}
                             </td>
                             <td>{{user.id}}</td>
@@ -43,7 +43,7 @@
                             <td class="fw-bolder">{{user.email}}</td>
                             <td>
                                 <div class="d-flex gap-1">
-                                    <a href="" class="btn btn-sm btn-primary">Voir le profil</a>
+                                    <a href="{{path('admin.user.profil', {id: user.id, slug: user.username})}}" class="btn btn-sm btn-primary">Voir le profil</a>
                                     <form action="{{path('admin.user.delete', {id: user.id})}}" method="POST">
                                         <input type="hidden" name="_method" value="DELETE" id="">
                                         <input type="submit" class="btn btn-sm btn-danger" value="Supprimer">

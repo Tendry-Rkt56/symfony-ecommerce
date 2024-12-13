@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+{% block title %} {{user.username}} {% endblock %}
+{% block styles %}
+     <link rel="stylesheet" href="{{asset('styles/partials/profil.css')}}">
+{% endblock %}
+{% block javascripts %}
+     <script src="{{asset('script/profil.js')}}" defer></script>
+{% endblock %}
+{% block body %}
+
+     {% include "partials/profil.html.twig" with {user: user} %}
+
+{% endblock %}

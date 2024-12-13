@@ -50,8 +50,6 @@ Suivez les étapes ci-dessous pour configurer le projet localement :
     ```bash
     symfony server:start
 
-
-  
 ## Informations de connexion 
   ### Administrateur
      - URL de connexion : 'http://localhost:8000/login'

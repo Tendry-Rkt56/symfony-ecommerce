@@ -16,6 +16,20 @@ class CommandeRepository extends ServiceEntityRepository
         parent::__construct($registry, Commande::class);
     }
 
+    public function getTotal()
+    {
+        return $this->getEntityManager()->createQuery("
+            SELECT SUM(c.total) FROM App\\Entity\\Commande c ORDER BY c.id DESC  
+        ")->setMaxResults(5)->getSingleScalarResult();
+    }
+
+    public function getLatestCommande()
+    {
+        return $this->getEntityManager()->createQuery("
+            SELECT c FROM App\\Entity\\Commande c ORDER BY c.id DESC  
+        ")->setMaxResults(5)->getResult();
+    }
+
     //    /**
     //     * @return Commande[] Returns an array of Commande objects
     //     */

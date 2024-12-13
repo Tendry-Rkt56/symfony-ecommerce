@@ -1,0 +1,70 @@
+{% extends "base.html.twig" %}
+{% block title %} Dashboard {% endblock %}
+{% block styles %}
+     <link rel="stylesheet" href="{{asset('styles/user/dashboard.css')}}">
+{% endblock %}
+{% block body %}
+     <div class="dashboards">
+		<div class="cards">
+     	     <a style="text-decoration: none;" href="{{path('admin.products.index')}}" class="card blue">
+     	         <h3>Produits</h3>
+     	         <p>{{ products }}</p>
+     	         <span>Gérer les produits</span>
+     	     </a>
+     	     <a style="text-decoration: none;" href="{{path('admin.category.index')}}" class="card light-blue">
+     	         <h3>Catégories</h3>
+     	         <p>{{ categories }}</p>
+     	         <span>Gérer les catégories</span>
+     	     </a>
+     	     <a style="text-decoration: none;" href="{{path('admin.user.index')}}" class="card purple">
+     	         <h3>Clients</h3>
+     	         <p>{{ clients }}</p>
+     	         <span>Gérer les clients</span>
+     	     </a>
+     	     <a style="text-decoration:none;" href="{{path('admin.commande.index')}}" class="card green">
+     	         <h3>Commandes</h3>
+			    <i style="color:white">Les 5 dérnières commandes: </i>
+     	         <p class="fw-bolder">{{ total | number_format(2, ',', ' ') }} €</p>
+     	         <span>Gérer les commandes</span>
+     	     </a>
+     	</div>
+		<div class="table-data">
+			<div class="order">
+				<div class="head">
+					<h3>Commandes récentes</h3>
+					<i class='bx bx-search'></i>
+					<i class='bx bx-filter'></i>
+				</div>
+				<table>
+					<thead>
+						<tr>
+							<th>User</th>
+							<th>Date Order</th>
+							<th>Status</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for commande in commandes %}
+							<tr>
+								<td>
+									{% if commande.user.image %}	
+										<img src="/image/{{vente.user.image}}" alt="">
+									{% endif %}
+									<p>{{ commande.user.username}}</p>
+								</td>
+								<td>{{ commande.createdAt | date}}</td>
+								<td>
+									<span class="status pending">
+										completed
+									</span>
+								</td>
+								<td><a class="btn btn-sm btn-primary" href="{{path('admin.commande.details', {id: commande.id})}}">Détails</a></td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}

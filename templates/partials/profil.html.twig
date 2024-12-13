@@ -1,29 +1,30 @@
-<div class="container my-4" style="position:absolute;z-index:2;">
-     {% for type, message in app.flashes %}
-         <div style="text-align:center;" class="container d-flex align-items-center justify-content-center alert alert-{{type}}">
-             {{ message | join('.') }}
-         </div>
-     {% endfor %}
-</div>
 <div class="profil">
-    <div class="image-user d-flex align-items-center">
-          <div class="d-flex align-items-center justify-content-center flex-column" style="width:100%">
-               {% if user.image is not empty %}
-                    <img style="height:100px;width:100px;border-radius:50%" src="/image/{{ user.image }}" class="image">
+     <div class="profile-card">
+          <div class="profile-content">
+               {% if  user.image %}
+                   <img src="/image/{{user.image}}" alt="" class="profile-pic">
                {% else %}
-                    <img style="height:100px;width:100px;border-radius:50%" src="/image/users/1077114.png" class="image">
+                   <img src="/image/users/default.jpg" alt="" class="profile-pic" style="border:1px solid green">
                {% endif %}
+               <h2>{{user.username}}</h2>
+               <p>{{ "ADMIN" in user.roles | join('') | upper ? 'Administrateur' : 'Utilisateur'}}</p>
+               <div class="profile-stats">
+                   <div>
+                       <span>Téléphone</span>
+                       {# <p>(+261) {{user.telephone}}</p> #}
+                   </div>
+                   <div>
+                       <span>Email</span>
+                       <p>{{ user.email }}</p>
+                   </div>
+                   <div>
+                       <span>Facebook</span>
+                       <p>Tendry RKT</p>
+                   </div>
+               </div>
                {% if app.user.id == user.id %}
-                    <form action="{{path('image.store')}}" id="form-profil" enctype="multipart/form-data" method="POST" action="" class="my-5 gap-2 container-fluid d-flex align-items-center justify-content-center flex-row">
-                         <input id="imageFile" type="file" name="image" class="form-control">
-                         <button type="submit" class="btn btn-sm btn-primary">Changer</button>
-                    </form>
+                   <a href="" class="show-more">Editer</a>
                {% endif %}
-               
-        </div>
-    </div>
-    <div class="user-info">
-        <h2 class="nom">Username: {{ user.username }}</h2>
-        <p class="email justify-content-end mt-4 mb-2">Email: {{ user.email }}</p>
-    </div>
+          </div>
+     </div>
 </div>

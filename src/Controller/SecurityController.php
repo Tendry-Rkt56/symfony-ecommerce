@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -87,10 +86,9 @@ class SecurityController extends AbstractController
             $user->setPassword($hasher->hashPassword($user, $form->get('password')->getData()))
                 ->setImage($this->image($form->get('image')->getData(), $user, 'user', 'user'))
                 ->setUpdatedAt(new \DateTimeImmutable());
-            $this->entity->persist($user);
             $this->entity->flush();
-            if ($this->security->isGranted('ROLE_ADMIN')) return $this->redirectToRoute('admin.dashboard');
-            return $this->redirectToRoute('user.products');
+            $referer = $request->headers->get('referer');
+            return $this->redirect($referer);
         }
         return $this->render('security/update.html.twig', [
             'form' => $form,
@@ -98,6 +96,7 @@ class SecurityController extends AbstractController
         ]);
 
     }
+
 
     private function image(?UploadedFile $file, User $user, string $directory = '', string $prefix = '')
     {

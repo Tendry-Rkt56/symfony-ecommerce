@@ -7,11 +7,12 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class AppFixtures extends Fixture
 {
 
-    public function __construct(private UserPasswordHasherInterface $hasher)
+    public function __construct(private UserPasswordHasherInterface $hasher, private SluggerInterface $slugger)
     {
         
     }
@@ -25,6 +26,7 @@ class AppFixtures extends Fixture
         $user->setUsername("Tendry Rkt")
             ->setRoles(['ROLE_ADMIN'])
             ->setEmail('tendry@gmail.com')
+            ->setSlug($this->slugger->slug('Tendry Rkt'))
             ->setPassword($this->hasher->hashPassword($user, '0000'))
             ->setImage(null)
             ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTime()))
@@ -33,9 +35,13 @@ class AppFixtures extends Fixture
         $manager->flush();
 
         for ($i = 1; $i < 10; $i++) {
+            $username = $faker->userName();
             $user = (new User());
-            $user->setUsername($faker->name())
+            /** @var User $user */
+            $user->setUsername($username)
                 ->setEmail($faker->email())
+                ->setAdress($faker->address())
+                ->setSlug($this->slugger->slug($username))
                 ->setPassword($this->hasher->hashPassword($user, 'password'))
                 ->setRoles([])
                 ->setImage(null)

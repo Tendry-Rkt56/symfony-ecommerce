@@ -53,6 +53,28 @@ class UserType extends AbstractType
                     'placeholder' => 'Nom d\'utilisateur...',
                 ]
             ])
+            ->add('adress', TextType::class, [
+                'required' => true,
+                'label' => 'Votre adresse',
+                'label_attr' => [
+                    'class' => 'fw-bolder',
+                ],
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Adresse physique...',
+                ]
+            ])
+            ->add('telephone', TextType::class, [
+                'required' => true,
+                'label' => 'N° Téléphone',
+                'label_attr' => [
+                    'class' => 'fw-bolder',
+                ],
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => '+261 ....',
+                ]
+            ])
             ->add('image', FileType::class, [
                 'label' => 'Votre image',
                 'label_attr' => [
